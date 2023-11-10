@@ -125,7 +125,7 @@ class CompanyService:
                     "status": 404
                 })), 404
 
-            if len(body["password"]) < 8:
+            if "password" in body.keys() and len(body["password"]) < 8:
                 return make_response(jsonify({
                     "message": "Invalid password format",
                     "error": "Bad Request",
@@ -135,7 +135,7 @@ class CompanyService:
             time_now = datetime.strftime(datetime.now(), "%d.%m.%Y %H:%M")
             body["updatedAt"] = time_now
 
-            self.db.companies.update_one({"login": login}, body)
+            self.db.companies.update_one({"login": login}, {"$set": body})
 
             company["_id"] = str(company["_id"])
 

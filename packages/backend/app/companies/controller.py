@@ -36,5 +36,6 @@ def update():
 
 
 @company_blueprint.route("/companies/delete", methods=["DELETE"])
-def delete(id):
-    return companyService.delete(id)
+def delete():
+    headers = request.headers
+    return companyService.delete(headers)
