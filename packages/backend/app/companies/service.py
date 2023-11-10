@@ -8,7 +8,7 @@ class CompanyService:
     def __init__(self, db):
         self.db = db
 
-    async def getOne(self, id):
+    def getOne(self, id):
         try:
             company = self.db.companies.find_one({"_id": ObjectId(id)})
 
@@ -18,6 +18,8 @@ class CompanyService:
                     "error": "Not Found",
                     "status": 404
                 })), 404
+
+            company["_id"] = str(company["_id"])
 
             return make_response(jsonify({
                 "message": "Company successfully found",
@@ -35,7 +37,7 @@ class CompanyService:
     def getMany(self):
         pass
 
-    async def create(self, body):
+    def create(self, body):
         try:
             company = self.db.companies.find_one({"login": body["login"]})
 
@@ -48,9 +50,9 @@ class CompanyService:
 
             if len(body["password"]) < 8:
                 return make_response(jsonify({
-                    "message": "Company not found",
-                    "error": "Not Found",
-                    "status": 404
+                    "message": "Invalid password format",
+                    "error": "Bad Request",
+                    "status": 400
                 })), 400
 
             time_now = datetime.strftime(datetime.now(), "%d.%m.%Y %H:%M")
@@ -60,6 +62,7 @@ class CompanyService:
 
             self.db.companies.insert_one(body)
 
+            body["_id"] = str(body["_id"])
             return make_response(jsonify({
                 "message": "Company created successfully",
                 "company": body,
@@ -93,7 +96,7 @@ class CompanyService:
                 })), 401
 
             token = jwt_encode(body["login"])
-
+            company["_id"] = str(company["_id"])
             return make_response(jsonify({
                 "message": "Success",
                 "company": company,
@@ -134,6 +137,8 @@ class CompanyService:
 
             self.db.companies.update_one({"login": login}, body)
 
+            company["_id"] = str(company["_id"])
+
             return make_response(jsonify({
                 "message": "Company updated successfully",
                 "company": body,
@@ -142,6 +147,7 @@ class CompanyService:
             })), 200
 
         except Exception as e:
+            print(e)
             return make_response(jsonify({
                 "message": "Server died!",
                 "error": str(e),
