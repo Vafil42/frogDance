@@ -33,7 +33,7 @@ export class AuthStore {
         this.requestManager.createRequest({
             url: `company/update/${import.meta.env.VITE_COMPANY_ID}`,
             method: "PATCH",
-            body: this.logInReady
+            body: this.signInReady
         })
     }
     singUp = () => {
