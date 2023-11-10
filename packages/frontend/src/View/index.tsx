@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import { RootStore } from "context"
 import { Link, Outlet } from "react-router-dom"
-import { childStyles, headerStyles, linkStyles, linksStyles, titleStyles } from "./style.css"
+import { childStyles, headerStyles, linkStyles, linksStyles, titleStyles, wrapperStyles } from "./style.css"
 
 const AppView = () => {
     const store = useMemo(() => new RootStore, [])
@@ -20,7 +20,7 @@ const AppView = () => {
         }
     ]
 
-    return <div>
+    return <div className={wrapperStyles}>
         <div className={headerStyles}>
             <div className={titleStyles}>СМОЛГИД</div>
             <div className={linksStyles}>
