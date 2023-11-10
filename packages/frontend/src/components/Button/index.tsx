@@ -3,7 +3,7 @@ import { ReactNode } from "react"
 import { buttonStyles } from "./style.css"
 
 interface ButtonInterface {
-    classname?: string,
+    classname?: unknown,
     onClick?: () => void;
     children: ReactNode,
 }
