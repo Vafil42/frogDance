@@ -1,4 +1,3 @@
-import Button from "components/Button"
 import LinkButton from "components/Button/LinkButton"
 import { observer } from "mobx-react-lite"
 
