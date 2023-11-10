@@ -11,7 +11,7 @@ class RouteService:
 
     def getOne(self, id):
         try:
-            route = self.db.routes.findOne({"_id": ObjectId(id)}, {})
+            route = self.db.routes.find_one({"_id": ObjectId(id)}, {})
 
             if not route:
                 return make_response(jsonify({
@@ -35,7 +35,7 @@ class RouteService:
 
     def getMany(self, body):
         try:
-            routes = [self.db.routes.findOne({"_id": ObjectId(i)}, {}) for i in body]
+            routes = [self.db.routes.find_one({"_id": ObjectId(i)}, {}) for i in body]
 
             if not routes:
                 return make_response(jsonify({
@@ -66,7 +66,7 @@ class RouteService:
             time_work = datetime.strftime(time_now, FORMAT)
             body["createdAt"] = str(time_work)
             body["updatedAt"] = str(time_work)
-            body["authorId"] = author
+            body["authorId"] = str(author["_id"])
             route = self.db.routes.insert_one(body)
 
             if not route:
@@ -103,7 +103,7 @@ class RouteService:
                     "status": 404
                 })), 404
 
-            if author != route["authorId"]:
+            if str(author["_id"]) != route["authorId"]:
                 return make_response(jsonify({
                     "message": "You are not an author of this route",
                     "error": "Forbidden",
@@ -114,10 +114,11 @@ class RouteService:
             FORMAT = "%d.%m.%y %H:%M"
             time_work = datetime.strftime(time_now, FORMAT)
             body["updatedAt"] = str(time_work)
-            route = self.db.routes.update_one({"_id": ObjectId(id)}, {"$set": body})
+            self.db.routes.update_one({"_id": ObjectId(id)}, {"$set": body})
+            print(body)
             return make_response(jsonify({
                 "message": "Success",
-                "route": str(route),
+                "route": str(body),
                 "status": 200
             })), 200
 
@@ -142,7 +143,7 @@ class RouteService:
                     "status": 404
                 })), 404
 
-            if author != route["authorId"]:
+            if str(author["_id"]) != route["authorId"]:
                 return make_response(jsonify({
                     "message": "You are not an author of this route",
                     "error": "Forbidden",
