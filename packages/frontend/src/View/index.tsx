@@ -7,10 +7,6 @@ const AppView = () => {
     const store = useMemo(() => new RootStore, [])
     const headerRoutes = [
         {
-            path: "main",
-            placeholder: "Главная"
-        },
-        {
             path: "company",
             placeholder: "Компания"
         },
@@ -22,7 +18,7 @@ const AppView = () => {
 
     return <div className={wrapperStyles}>
         <div className={headerStyles}>
-            <div className={titleStyles}>СМОЛГИД</div>
+            <div className={titleStyles}><img src="/text-logo.svg" /></div>
             <div className={linksStyles}>
                 {headerRoutes.map((route, index) => <Link className={linkStyles} key={index} to={route.path}>{route.placeholder}</Link>)}
             </div>

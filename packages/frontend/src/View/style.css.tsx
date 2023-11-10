@@ -20,7 +20,7 @@ export const headerStyles = style({
 
 export const titleStyles = style({
     width: "max-content",
-    paddingTop: 30,
+    paddingTop: 50,
 })
 
 export const linksStyles = style({

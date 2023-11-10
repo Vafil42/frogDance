@@ -6,6 +6,7 @@ interface CardInterface {
     title?: string,
     children: ReactNode,
     className?: string,
+    actions?: ReactNode,
 }
 
 const Card = (props: CardInterface) => {
@@ -14,6 +15,7 @@ const Card = (props: CardInterface) => {
             {props.title && <div className={titleStyles}>{props.title}</div>}
             {props.children}
         </div>
+        {props.actions && <div className="">{props.actions}</div>}
     </div>
 }
 export default observer(Card)

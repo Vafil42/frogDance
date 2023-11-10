@@ -9,3 +9,16 @@ export const subtitleStyles = style({
     fontSize: 12,
     color: "gray",
 })
+
+export const titlesStyles = style({
+    display: "flex",
+    flexDirection: "column"
+})
+
+export const wrapperStyles = style({
+    display: "flex",
+    flexDirection: "row",
+    width: "auto",
+    justifyContent: "space-between",
+    alignItems: "center",
+})
