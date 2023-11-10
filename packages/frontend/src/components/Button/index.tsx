@@ -4,13 +4,13 @@ import { buttonStyles } from "./style.css"
 
 interface ButtonInterface {
     classname?: string,
-    onClick: () => void,
+    onClick?: () => void;
     children: ReactNode,
 }
 
 const Button = (params: ButtonInterface) => {
     return <div>
-        <button className={buttonStyles}>{params.children}</button>
+        <button className={buttonStyles} onClick={params.onClick}>{params.children}</button>
     </div>
 }
 

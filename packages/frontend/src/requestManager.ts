@@ -4,7 +4,7 @@ import type { Method } from "axios"
 interface RequestInterface {
     method: Method,
     url: string,
-    body?: any,
+    body?: unknown,
 }
 
 interface AuthRequestInterface {

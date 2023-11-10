@@ -8,17 +8,19 @@ export class CompanyStore {
         makeAutoObservable(this)
     }
 
-    entity!: CompanyDetailEntity
+    entity?: CompanyDetailEntity
 
     requestManager = useRequestManager()
 
     loadCompany() {
-        this.requestManager.createRequest({
-            url: `company/get/${import.meta.env.VITE_COMPANY_ID}`,
-            method: "GET"
-        }).then((responce) => {
-            this.entity = responce.data
-        })
+        // this.requestManager.createRequest({
+        //     url: `company/get/${import.meta.env.VITE_COMPANY_ID}`,
+        //     method: "GET"
+        // }).then((responce) => {
+        //     this.entity = responce.data
+        // })
+
+        this.entity = {name: "Компаниrrv hyrgntjurrя", id: "1", description: "Описание"}
     }
 
     editCompany(entity: EditCompanyEntity) {
