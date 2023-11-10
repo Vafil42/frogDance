@@ -9,3 +9,5 @@ const AppView = () => {
         <Outlet context={store} />
     </div>
 }
+
+export default AppView
