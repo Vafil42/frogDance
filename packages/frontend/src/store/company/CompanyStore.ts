@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { CompanyDetailEntity } from "./entities/CompanyDetail";
+import { CompanyDetailEntity, CreateCompanyDetailEntity } from "./entities/CompanyDetail";
 import { EditCompanyEntity } from "./entities/EditCompany";
 import { useRequestManager } from "requestManager";
 
@@ -20,7 +20,7 @@ export class CompanyStore {
         //     this.entity = responce.data
         // })
 
-        this.entity = {name: "Компаниrrv hyrgntjurrя", id: "1", description: "Описание"}
+        this.entity = {login: "asas@mail.ru", password: "123", name: "Компаниrrv hyrgntjurrя", id: "1", description: "Описание"}
     }
 
     editCompany(entity: EditCompanyEntity) {
@@ -28,6 +28,13 @@ export class CompanyStore {
             url: `company/update/${import.meta.env.VITE_COMPANY_ID}`,
             method: "PATCH",
             body: entity.apiReady
+        })
+    }
+    createCompany(entity: CreateCompanyDetailEntity) {
+        this.requestManager.createRequest({
+            url: `company/update/${import.meta.env.VITE_COMPANY_ID}`,
+            method: "POST",
+            body: entity
         })
     }
 }
