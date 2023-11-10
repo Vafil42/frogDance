@@ -21,16 +21,16 @@ def getMany():
 
 @route_blueprint.route("/routes/create", methods=["POST"])
 def create():
-    return routeService.create(request.json)
+    return routeService.create(request.headers, request.json)
 
 
 @route_blueprint.route("/routes/update/<string:id>", methods=["PUT"])
 def update(id):
-    return routeService.update(id, request.json)
+    return routeService.update(id, request.headers, request.json)
 
 
 @route_blueprint.route("/routes/delete/<string:id>", methods=["DELETE"])
 def delete(id):
-    return routeService.delete(id)
+    return routeService.delete(id, request.headers)
 
 # обработчик запросов

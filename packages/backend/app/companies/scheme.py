@@ -24,7 +24,5 @@ company_schema = {
         "required": True
     },
     "routes": {
-        "type": "string",
-        "required": True
     }
 }

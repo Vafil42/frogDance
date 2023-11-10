@@ -1,5 +1,5 @@
 from app import create_app
-from flask import request
+from app.scripts import jwt_encode, jwt_decode
 
 
 app = create_app()
@@ -8,13 +8,10 @@ app = create_app()
 @app.route("/")
 @app.route("/index")
 def hello():
-    return "Hello, world!"
-
-
-@app.route("/get", methods=["POST"])
-def get():
-    return request.json
+    token = jwt_decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6IkFsZXhhbmRyMDEwNDA2Iiwic2FsdCI6InN1Z2FyIn0._hIog-WVHxmMZHWqX5E09hlHyrWOnq7LUYQqyaGizXs")
+    print(token)
+    return token
 
 
 if __name__ == "__main__":
-    app.run(host="localhost", port=8080)
+    app.run(host="0.0.0.0", port=8080)
