@@ -3,6 +3,7 @@ import TitleCard from "components/Card/TitleCard"
 import { useStore } from "context"
 import { observer } from "mobx-react-lite"
 import { useMemo } from "react";
+import Actions from "./Actions";
 
 const CompanyView = () => {
     const { companyStore } = useStore()
@@ -12,7 +13,7 @@ const CompanyView = () => {
     console.log(companyStore.entity)
 
     return <>
-        <TitleCard subtitle="Ваша компания">{companyStore.entity!.name}</TitleCard>
+        <TitleCard subtitle="Ваша компания" actions={<Actions />}>{companyStore.entity!.name}</TitleCard>
         <Card title="Описание">{companyStore.entity?.description}</Card>
     </>
 }

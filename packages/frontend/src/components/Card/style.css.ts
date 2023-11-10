@@ -8,6 +8,8 @@ export const wrapperStyles = style({
     borderRadius: 10,
     padding: 20,
     boxShadow: "1px 1px 4px black",
+    justifyContent: "space-between",
+    flex: "auto"
 })
 
 export const titleStyles = style({
