@@ -31,7 +31,8 @@ async def logIn():
 
 @company_blueprint.route("/companies/get-one/<string:id>", methods=["PUT"])
 async def update(id):
-    return await companyService.update(id, request.json)
+    headers = request.headers
+    return await companyService.update(headers, request.json)
 
 
 @company_blueprint.route("/companies/get-one/<string:id>", methods=["DELETE"])
