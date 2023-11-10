@@ -20,7 +20,7 @@ export class CompanyStore {
         //     this.entity = responce.data
         // })
 
-        this.entity = {name: "Компаниrrv hyrgntjurrя", id: "1", description: "Описание"}
+        this.entity = { name: "Смоленский завод резиноизделий", id: "1", description: "Тестовое описание компании. В теории должно быть большим" }
     }
 
     editCompany(entity: EditCompanyEntity) {

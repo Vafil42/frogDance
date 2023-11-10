@@ -7,10 +7,6 @@ const AppView = () => {
     const store = useMemo(() => new RootStore, [])
     const headerRoutes = [
         {
-            path: "main",
-            placeholder: "Главная"
-        },
-        {
             path: "company",
             placeholder: "Компания"
         },

@@ -5,10 +5,11 @@ import { observer } from "mobx-react-lite"
 import { useMemo } from "react";
 
 const CompanyView = () => {
-    
     const { companyStore } = useStore()
 
     useMemo(() => companyStore.loadCompany(), [companyStore])
+
+    console.log(companyStore.entity)
 
     return <>
         <TitleCard subtitle="Ваша компания">{companyStore.entity!.name}</TitleCard>
