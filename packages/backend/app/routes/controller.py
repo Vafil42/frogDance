@@ -32,3 +32,5 @@ def update(id):
 @route_blueprint.route("/routes/delete/<string:id>", methods=["DELETE"])
 def delete(id):
     return routeService.delete(id)
+
+# обработчик запросов

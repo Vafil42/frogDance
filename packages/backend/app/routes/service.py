@@ -1,15 +1,16 @@
 from flask import jsonify, make_response
 from flask_pymongo import ObjectId
-import datetime
+from datetime import datetime
+
 
 class RouteService:
 
     def __init__(self, db):
         self.db = db
 
-    async def getOne(self, id):
+    def getOne(self, id):
         try:
-            route = await self.db.routes.findOne({"_id": ObjectId(id)}, {})
+            route = self.db.routes.findOne({"_id": ObjectId(id)}, {})
 
             if not route:
                 return make_response(jsonify({
@@ -30,9 +31,9 @@ class RouteService:
                 "status": 500
             })), 500
 
-    async def getMany(self, body):
+    def getMany(self, body):
         try:
-            routes = [await self.db.routes.findOne({"_id": ObjectId(i)}, {}) for i in body]
+            routes = [self.db.routes.findOne({"_id": ObjectId(i)}, {}) for i in body]
 
             if not routes:
                 return make_response(jsonify({
@@ -53,11 +54,14 @@ class RouteService:
                 "status": 500
             })), 500
 
-    async def create(self, body):
+    def create(self, body):
         try:
-            body["createdAt"] = str(datetime.datetime.now())
-            body["updatedAt"] = str(datetime.datetime.now())
-            route = await self.db.routes.insert_one(body)
+            time_now = datetime.now()
+            FORMAT = "%d.%m.%y %H:%M"
+            time_work = datetime.strftime(time_now, FORMAT)
+            body["createdAt"] = str(time_work)
+            body["updatedAt"] = str(time_work)
+            route = self.db.routes.insert_one(body)
 
             if not route:
                 return make_response(jsonify({
@@ -78,10 +82,13 @@ class RouteService:
                 "status": 500
             })), 500
 
-    async def update(self, id, body):
+    def update(self, id, body):
         try:
-            body["updatedAt"] = str(datetime.datetime.now())
-            route = await self.db.routes.update_one({"_id": ObjectId(id)}, {"$set": body})
+            time_now = datetime.now()
+            FORMAT = "%d.%m.%y %H:%M"
+            time_work = datetime.strftime(time_now, FORMAT)
+            body["updatedAt"] = str(time_work)
+            route = self.db.routes.update_one({"_id": ObjectId(id)}, {"$set": body})
 
             if not route:
                 return make_response(jsonify({
@@ -102,9 +109,9 @@ class RouteService:
                 "status": 500
             })), 500
 
-    async def delete(self, id):
+    def delete(self, id):
         try:
-            route = await self.db.routes.find_one({"_id": ObjectId(id)})
+            route = self.db.routes.find_one({"_id": ObjectId(id)})
 
             if not route:
                 return make_response(jsonify({
