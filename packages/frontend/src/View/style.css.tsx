@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 
 export const wrapperStyles = style({
     display: "flex",
@@ -47,4 +47,10 @@ export const childStyles = style({
     flex: "auto",
     minHeight: "100vh"
     // height: "100vh",
+})
+
+globalStyle("body", {
+    backgroundColor: "#90B1FF",
+    margin: 0,
+    fontFamily: "'Ubuntu Mono', monospace",
 })

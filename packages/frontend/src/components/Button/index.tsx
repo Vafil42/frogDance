@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite"
 import { ReactNode } from "react"
+import { buttonStyles } from "./style.css"
 
 interface ButtonInterface {
     classname?: string,
@@ -9,7 +10,7 @@ interface ButtonInterface {
 
 const Button = (params: ButtonInterface) => {
     return <div>
-        <button>{params.children}</button>
+        <button className={buttonStyles}>{params.children}</button>
     </div>
 }
 
