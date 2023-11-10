@@ -2,5 +2,8 @@
   "dependencies": {
     "react-context": "^0.0.3",
     "react-router-dom": "^6.18.0"
+  },
+  "devDependencies": {
+    "@vanilla-extract/vite-plugin": "^3.9.0"
   }
 }
