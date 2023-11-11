@@ -180,3 +180,31 @@ class RouteService:
                 "error": str(e),
                 "status": 500
             })), 500
+
+    def getAll(self):
+        try:
+            route = self.db.companies.find_many()
+
+            if not route:
+                return make_response(jsonify({
+                    "message": "Company not found",
+                    "error": "Not Found",
+                    "status": 404
+                })), 404
+
+            routes = list(self.db.users.find({"authorId": str(route["_id"])}))
+            for i in range(len(routes)):
+                routes[i]["_id"] = str(routes[i]["_id"])
+
+            return make_response(jsonify({
+                "message": "Company successfully found",
+                "routes": routes,
+                "status": 200
+            })), 200
+
+        except Exception as e:
+            return make_response(jsonify({
+                "message": "Server died!",
+                "error": str(e),
+                "status": 500
+            })), 500

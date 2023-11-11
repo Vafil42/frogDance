@@ -10,7 +10,7 @@ company_blueprint = Blueprint("company_api", __name__)
 
 
 @company_blueprint.route("/companies/get-one", methods=["GET"])
-def getOne(id):
+def getOne():
     headers = request.headers
     return companyService.getOne(headers)
 

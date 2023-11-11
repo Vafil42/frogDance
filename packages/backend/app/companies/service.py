@@ -1,6 +1,5 @@
 from flask import jsonify, make_response
 from packages.backend.app.scripts import jwt_encode, jwt_decode
-from flask_pymongo import ObjectId
 from datetime import datetime
 
 

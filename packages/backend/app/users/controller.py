@@ -10,13 +10,15 @@ user_blueprint = Blueprint("user_api", __name__)
 
 
 @user_blueprint.route("/users/get-one/<string:id>", methods=["GET"])
-def getOne(id):
-    return userService.getOne(id)
+def getOne():
+    headers = request.headers
+    return userService.getOne(headers)
 
 
-@user_blueprint.route("/users/get-many", methods=["GET"])
-def getMany():
-    return userService.getMany()
+@user_blueprint.route("/users/get-users", methods=["GET"])
+def getUsers():
+    headers = request.headers
+    return userService.getUsers(headers)
 
 
 @user_blueprint.route("/users/create", methods=["POST"])

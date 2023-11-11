@@ -42,4 +42,9 @@ def update(id):
 def delete(id):
     return routeService.delete(id, request.headers)
 
-# обработчик запросов
+
+@route_blueprint.route("/routes/get-all", methods=["PUT"])
+def getAll():
+    return routeService.getAll()
+
+

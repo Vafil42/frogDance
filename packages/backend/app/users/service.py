@@ -1,6 +1,5 @@
 from flask import jsonify, make_response
 from packages.backend.app.scripts import jwt_encode, jwt_decode
-from flask_pymongo import ObjectId
 from datetime import datetime
 
 
@@ -8,9 +7,12 @@ class CompanyService:
     def __init__(self, db):
         self.db = db
 
-    def getOne(self, id):
+    def getOne(self, headers):
         try:
-            user = self.db.users.find_one({"_id": ObjectId(id)})
+            token = headers["Authorization"]
+            login = jwt_decode(token)
+
+            user = self.db.users.find_one({"login": login})
 
             if not user:
                 return make_response(jsonify({
@@ -34,8 +36,36 @@ class CompanyService:
                 "status": 500
             })), 500
 
-    def getMany(self):
-        pass
+    def getUsers(self, headers):
+        try:
+            token = headers["Authorization"]
+            login = jwt_decode(token)
+
+            user = self.db.companies.find_one({"login": login})
+
+            if not user:
+                return make_response(jsonify({
+                    "message": "Company not found",
+                    "error": "Not Found",
+                    "status": 404
+                })), 404
+
+            users = list(self.db.users.find({"authorId": str(company["_id"])}))
+            for i in range(len(users)):
+                users[i]["_id"] = str(users[i]["_id"])
+
+            return make_response(jsonify({
+                "message": "Company successfully found",
+                "routes": users,
+                "status": 200
+            })), 200
+
+        except Exception as e:
+            return make_response(jsonify({
+                "message": "Server died!",
+                "error": str(e),
+                "status": 500
+            })), 500
 
     def create(self, body):
         try:
