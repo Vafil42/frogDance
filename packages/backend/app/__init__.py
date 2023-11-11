@@ -6,11 +6,12 @@ from packages.backend.app.routes.controller import init_controller as route_cont
 from packages.backend.app.routes.service import RouteService
 from packages.backend.app.companies.controller import init_controller as company_controller, company_blueprint
 from packages.backend.app.companies.service import CompanyService
-
+from flask_cors import CORS
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
+    CORS(app, supports_credentials=True)
     db = init_db(app)
     loginManager = LoginManager()
     loginManager.init_app(app)
