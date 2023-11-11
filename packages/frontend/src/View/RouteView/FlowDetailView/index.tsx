@@ -8,7 +8,7 @@ import Card from "components/Card"
 import ListElement from "components/ListCard/ListElement"
 import Actions from "./Actions"
 
-const FlowDetailView = () => {
+const RouteDetailView = () => {
     const { routStore } = useStore()
 
     const { id } = useParams()
@@ -24,4 +24,4 @@ const FlowDetailView = () => {
     </>
 }
 
-export default observer(FlowDetailView)
+export default observer(RouteDetailView)

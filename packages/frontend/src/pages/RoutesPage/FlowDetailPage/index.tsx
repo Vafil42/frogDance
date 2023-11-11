@@ -1,11 +1,10 @@
 import { RootStore, RootStoreContext } from "context"
 import { useOutletContext } from "react-router-dom"
-import FlowDetailView from "views/FlowView/FlowDetailView"
-
-export const FlowDetailPage = () => {
+import RouteDetailView from "View/RouteView/FlowDetailView"
+export const RouteDetailPage = () => {
     const rootStore = useOutletContext() as RootStore
 
     return <RootStoreContext.Provider value={rootStore}>
-        <FlowDetailView />
+        <RouteDetailView />
     </RootStoreContext.Provider>
 }

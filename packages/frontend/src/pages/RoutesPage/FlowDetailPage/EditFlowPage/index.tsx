@@ -1,13 +1,13 @@
 import { RootStore, RootStoreContext } from "context"
 import { useOutletContext, useParams } from "react-router-dom"
-import EditFlowView from "views/FlowView/EditFlowView"
+import EditRouteView from "View/RouteView/EditFlowView"
 
-export const EditFlowPage = () => {
+export const EditRoutePage = () => {
     const rootStore = useOutletContext() as RootStore
 
     const { id } = useParams()
 
     return <RootStoreContext.Provider value={rootStore}>
-        <EditFlowView entityId={id} />
+        <EditRouteView entityId={id} />
     </RootStoreContext.Provider>
 }
