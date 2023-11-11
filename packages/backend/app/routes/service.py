@@ -183,22 +183,28 @@ class RouteService:
 
     def getAll(self):
         try:
-            route = self.db.companies.find_many()
+            route_list = []
+            routes = self.db.routes.find({}, {"_id": 1, "name": 1, "description": 1, "image": 1,
+                                         "points": 1, "authorId": 1})
+            for route in list(routes):
+                company = self.db.companies.find_one({"_id": ObjectId(route["authorId"])},
+                                                     {"_id": 1, "name": 1, "description": 1, "image": 1})
+                if not company:
+                    return make_response(jsonify({
+                        "message": "Company not found",
+                        "error": "Not Found",
+                        "status": 404
+                    })), 404
 
-            if not route:
-                return make_response(jsonify({
-                    "message": "Company not found",
-                    "error": "Not Found",
-                    "status": 404
-                })), 404
-
-            routes = list(self.db.users.find({"authorId": str(route["_id"])}))
-            for i in range(len(routes)):
-                routes[i]["_id"] = str(routes[i]["_id"])
+                company["_id"] = str(company["_id"])
+                route["_id"] = str(route["_id"])
+                route["company"] = company
+                del route["authorId"]
+                route_list.append(route)
 
             return make_response(jsonify({
-                "message": "Company successfully found",
-                "routes": routes,
+                "message": "Routes successfully found",
+                "routes": route_list,
                 "status": 200
             })), 200
 

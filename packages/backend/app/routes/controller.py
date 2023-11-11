@@ -43,7 +43,7 @@ def delete(id):
     return routeService.delete(id, request.headers)
 
 
-@route_blueprint.route("/routes/get-all", methods=["PUT"])
+@route_blueprint.route("/routes/get-all", methods=["GET"])
 def getAll():
     return routeService.getAll()
 
