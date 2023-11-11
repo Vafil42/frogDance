@@ -33,19 +33,37 @@ class RouteService:
                 "status": 500
             })), 500
 
-    def getMany(self, body):
+    def getFavorites(self, body):
         try:
-            routes = [self.db.routes.find_one({"_id": ObjectId(i)}, {}) for i in body]
+            routes = []
+            for i in body:
+                route = self.db.routes.find_one({"_id": ObjectId(i)},
+                                                {"id": 1, "name": 1, "description": 1, "image": 1,
+                                                 "points": 1, "authorId": 1})
+                company = self.db.companies.find_one({"_id": ObjectId(route["authorId"])},
+                                                     {"id": 1, "name": 1, "description": 1, "image": 1})
+                if not route:
+                    return make_response(jsonify({
+                        "message": "Route not found",
+                        "error": "Not found",
+                        "status": 404
+                    })), 404
+                if not company:
+                    return make_response(jsonify({
+                        "message": "Company not found",
+                        "error": "Not found",
+                        "status": 404
+                    })), 404
 
-            if not routes:
-                return make_response(jsonify({
-                    "message": "Route not found",
-                    "error": "Not found",
-                    "status": 404
-                })), 404
+                route["_id"] = str(route["_id"])
+                company["_id"] = str(company["_id"])
+                route["company"] = company
+                del route["authorId"]
+                routes.append(route)
+
             return make_response(jsonify({
                 "message": "Success",
-                "route": str(routes),
+                "route": routes,
                 "status": 200
             })), 200
 
