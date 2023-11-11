@@ -14,9 +14,10 @@ def getOne(id):
     return companyService.getOne(id)
 
 
-@company_blueprint.route("/companies/get-many", methods=["GET"])
-def getMany():
-    return companyService.getMany()
+@company_blueprint.route("/companies/get-routes", methods=["GET"])
+def getRoutes():
+    headers = request.headers
+    return companyService.getRoutes(headers)
 
 
 @company_blueprint.route("/companies/create", methods=["POST"])

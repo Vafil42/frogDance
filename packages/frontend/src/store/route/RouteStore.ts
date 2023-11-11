@@ -24,18 +24,38 @@ export class RouteStore {
         } catch (error) {error}
     }
 
-    loadRouts(companyId: string) {
-        try {
-            this.requestManager.createRequest({
-                method: "GET",
-                url: `flow/for-company/${companyId}`,
-            }).then((responce) => this.routs = responce.data)
+    loadRouts() {
+        // try {
+        //     this.requestManager.createRequest({
+        //         method: "GET",
+        //         url: `flow/for-company/${companyId}`,
+        //     }).then((responce) => this.routs = responce.data)
 
-            this.rout = undefined
-        } catch (e) { e }
+        //     this.rout = undefined
+        // } catch (e) { e }
+        this.routs = [
+            {
+                name: "sdfdsf",
+                description: "sdf",
+                _id: "1",
+                points: []
+            },
+            {
+                name: "sdfdsf",
+                description: "sdf",
+                _id: "2",
+                points: []
+            },
+            {
+                name: "sdfdsf",
+                description: "sdf",
+                _id: "3",
+                points: []
+            },
+        ]
     }
 
-    loadRout(id: string) {
+    loadRoute(id: string) {
         try {
             this.requestManager.createRequest({
                 method: "GET",
