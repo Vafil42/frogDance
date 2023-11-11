@@ -13,14 +13,12 @@ export class CompanyStore {
     requestManager = useRequestManager()
 
     loadCompany() {
-        // this.requestManager.createRequest({
-        //     url: `company/get/${import.meta.env.VITE_COMPANY_ID}`,
-        //     method: "GET"
-        // }).then((responce) => {
-        //     this.entity = responce.data
-        // })
-
-        this.entity = { name: "Смоленский завод резиноизделий", id: "1", description: "Тестовое описание компании. В теории должно быть большим" }
+        this.requestManager.createRequest({
+            url: `company/get`,
+            method: "GET"
+        }).then((responce) => {
+            this.entity = responce.data
+        })
     }
 
     editCompany(entity: EditCompanyEntity) {

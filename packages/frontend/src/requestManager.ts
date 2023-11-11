@@ -1,5 +1,6 @@
 import axios from "axios"
 import type { Method } from "axios"
+import useCookie from "react-cookies"
 
 interface RequestInterface {
     method: Method,
@@ -28,24 +29,29 @@ export class RequestManager {
     })
 
     async createRequest(request: RequestInterface) {
+        const token = useCookie.load("token")
+
         const responce = await this.axios({
             url: request.url,
             method: request.method,
             params: request.method === "GET" ? request.body : undefined,
             data: request.method !== "GET" ? request.body : undefined,
+            headers: { Authorization: token }
         })
 
         return responce
     }
 
     async createAuthRequest({ body, url, method = "POST" }: AuthRequestInterface) {
-        const responce = await this.axios({
+        if (useCookie.load("token")) useCookie.remove("token")
+
+        this.axios({
             url,
             method,
             data: body,
             withCredentials: true,
-        })
-        return responce
+        }).then((responce) => useCookie.save("token", responce.data.token, {}))
+
     }
 }
 

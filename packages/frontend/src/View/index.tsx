@@ -1,9 +1,12 @@
 import { useMemo } from "react"
 import { RootStore } from "context"
-import { Link, Outlet } from "react-router-dom"
+import { Link, Navigate, Outlet } from "react-router-dom"
+import cookies from "react-cookies"
 import { childStyles, headerStyles, linkStyles, linksStyles, titleStyles, wrapperStyles } from "./style.css"
 
 const AppView = () => {
+    if (!cookies.load("token")) return <Navigate to={"/auth"} />
+
     const store = useMemo(() => new RootStore, [])
     const headerRoutes = [
         {
