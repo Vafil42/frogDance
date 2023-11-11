@@ -14,14 +14,14 @@ const AppView = () => {
             placeholder: "Компания"
         },
         {
-            path: "routs",
+            path: "routes",
             placeholder: "Маршруты"
         }
     ]
 
     return <div className={wrapperStyles}>
         <div className={headerStyles}>
-            <div className={titleStyles}><img src="/text-logo.svg" /></div>
+            <div className={titleStyles}><img src="/logo-white.svg" width={220} /></div>
             <div className={linksStyles}>
                 {headerRoutes.map((route, index) => <Link className={linkStyles} key={index} to={route.path}>{route.placeholder}</Link>)}
             </div>

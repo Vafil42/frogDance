@@ -14,18 +14,18 @@ export class CompanyStore {
 
     loadCompany() {
         this.requestManager.createRequest({
-            url: `company/get`,
+            url: `companies/get-one`,
             method: "GET"
         }).then((responce) => {
-            this.entity = responce.data
+            this.entity = responce.data.company
         })
     }
 
     editCompany(entity: EditCompanyEntity) {
         this.requestManager.createRequest({
-            url: `company/update/${import.meta.env.VITE_COMPANY_ID}`,
-            method: "PATCH",
-            body: entity.apiReady
+            url: `companies/update`,
+            method: "PUT",
+            body: { ...entity.apiReady, id: undefined }
         })
     }
     createCompany(entity: CreateCompanyDetailEntity) {

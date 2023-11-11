@@ -22,10 +22,10 @@ const EditRouteView = ({ entityId }: EditRouteViewInterface) => {
         routStore.loadRoute(entityId)
     }
 
-    const entity = useMemo(() => routStore.rout ? CreateRouteEntity.buildForEntity(routStore.rout) : new CreateRouteEntity(), [routStore])
+    const entity = useMemo(() => routStore.route ? CreateRouteEntity.buildForEntity(routStore.route) : new CreateRouteEntity(), [routStore])
 
     return <div>
-        <CardTitle subtitle="Маршруты" actions={<LinkButton to="/flow">Отмена</LinkButton>}>Создание маршрута</CardTitle>
+        <CardTitle subtitle="Маршруты" actions={<LinkButton to="/routes">Отмена</LinkButton>}>Создание маршрута</CardTitle>
         <Card >
             <div className={wrapperStyles} >
                 <TextField placeholder="Название маршрута" value={entity.entity.name} onChange={entity.setName} />
@@ -34,6 +34,13 @@ const EditRouteView = ({ entityId }: EditRouteViewInterface) => {
                 <Actions entity={entity} />
             </div>
         </ Card>
+        <Card title="Откуда взять координаты?">
+            1. На сайте ЯндексКарты выбрать интересуемую точку.
+            <br />
+            2. Скопировать её координаты в форммате 12.1234567, 12.1234567
+            <br />
+            3. Вставить в поле "координаты"
+        </Card>
     </div>
 }
 

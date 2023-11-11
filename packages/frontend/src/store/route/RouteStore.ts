@@ -10,66 +10,47 @@ export class RouteStore {
     }
 
     routs?: RouteDetailEntity[]
-    rout?: RouteDetailEntity | undefined
+    route?: RouteDetailEntity | undefined
 
     requestManager = useRequestManager()
 
-    createRout(entity: CreateRouteEntity, companyId: string) {
+    createRout(entity: CreateRouteEntity) {
         try {
             this.requestManager.createRequest({
                 method: "POST",
-                url: "flow/create",
-                body: { ...entity.apiReady, company: { _id: companyId } }
+                url: "routes/create",
+                body: { ...entity.apiReady }
             })
-        } catch (error) {error}
+        } catch (error) { }
     }
 
     loadRouts() {
-        // try {
-        //     this.requestManager.createRequest({
-        //         method: "GET",
-        //         url: `flow/for-company/${companyId}`,
-        //     }).then((responce) => this.routs = responce.data)
+        try {
+            this.requestManager.createRequest({
+                method: "GET",
+                url: `companies/get-routes`,
+            }).then((responce) => this.routs = responce.data.routes)
 
-        //     this.rout = undefined
-        // } catch (e) { e }
-        this.routs = [
-            {
-                name: "sdfdsf",
-                description: "sdf",
-                _id: "1",
-                points: []
-            },
-            {
-                name: "sdfdsf",
-                description: "sdf",
-                _id: "2",
-                points: []
-            },
-            {
-                name: "sdfdsf",
-                description: "sdf",
-                _id: "3",
-                points: []
-            },
-        ]
+            this.route = undefined
+        } catch (e) { }
+
     }
 
     loadRoute(id: string) {
         try {
             this.requestManager.createRequest({
                 method: "GET",
-                url: `flow/get/${id}`
-            }).then((responce) => this.rout = responce.data)
-        } catch (e) { e }
+                url: `routes/get-one/${id}`
+            }).then((responce) => this.route = responce.data.route)
+        } catch (e) { }
     }
 
-    deleteRout(id: string) {
+    deleteRoute(id: string) {
         try {
             this.requestManager.createRequest({
                 method: "DELETE",
-                url: `flow/${id}/delete`
-            }).then((responce) => this.rout = responce.data)
-        } catch (e) {e}
+                url: `routes/delete/${id}`
+            }).then((responce) => this.route = responce.data)
+        } catch (e) { }
     }
 }

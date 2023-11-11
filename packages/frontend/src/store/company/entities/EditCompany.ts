@@ -10,6 +10,9 @@ export class EditCompanyEntity {
     setDescription = (value: string) => this.entity.description = value
 
     get apiReady() {
-        return this.entity
+        return {
+            name: this.entity.name,
+            description: this.entity.description,
+        }
     }
 }

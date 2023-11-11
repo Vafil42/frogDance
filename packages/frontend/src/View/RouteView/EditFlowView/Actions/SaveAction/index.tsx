@@ -11,7 +11,7 @@ interface AddPointActionInterface {
 const SaveAction = ({ entity }: AddPointActionInterface) => {
     const { routStore } = useStore()
 
-    return <LinkButton to="/flow" classname={wrapperStyles} onClick={() => routStore.createRout(entity, import.meta.env.VITE_COMPANY_ID)}>Сохранить</LinkButton>
+    return <LinkButton to="/routes" classname={wrapperStyles} onClick={() => routStore.createRout(entity)}>Сохранить</LinkButton>
 }
 
 export default observer(SaveAction)

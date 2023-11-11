@@ -16,27 +16,27 @@ export const router = createBrowserRouter([
             {
                 path: "company",
                 element: <CompanyPage />
-            }, 
-            {
-                path: "routs",
-                element: <RoutePage/>
             },
             {
-            path: "rout/create",
-            element: <CreateRoutePage />
-        },
-        {
-            path: "/rout/:id",
-            element: <RouteDetailPage />,
-        },
-        {
-            path: "/rout/:id/edit",
-            element: <EditRoutePage />
-        },
-        {
-            path: "/company/edit",
-            element: <EditCompanyPage />
-        }
+                path: "routes",
+                element: <RoutePage />
+            },
+            {
+                path: "routes/create",
+                element: <CreateRoutePage />
+            },
+            {
+                path: "/routes/:id",
+                element: <RouteDetailPage />,
+            },
+            {
+                path: "/routes/:id/edit",
+                element: <EditRoutePage />
+            },
+            {
+                path: "/company/edit",
+                element: <EditCompanyPage />
+            }
         ]
     },
     {

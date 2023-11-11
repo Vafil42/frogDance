@@ -7,14 +7,16 @@ import { useState } from "react"
 import Button from "components/Button"
 
 const Actions = () => {
-    const { flowStore } = useStore()
+    const { routStore } = useStore()
     const { id } = useParams()
 
     const [deleteState, setDeleteState] = useState(false)
 
     return <div className={wrapperStyles}>
-        {deleteState ? <LinkButton to="/flow" onClick={() => flowStore.deleteFlow(id)}>Вы уверены?</LinkButton> : <Button onClick={() => setDeleteState(true)}>Удалить</Button>}
-        <LinkButton to="edit" className={buttonStyles}>Редактировать</LinkButton>
+        {deleteState ? <LinkButton to="/routes" onClick={() => routStore.deleteRoute(id!)}>Вы уверены?</LinkButton> : <Button onClick={() => setDeleteState(true)}>Удалить</Button>}
+        <div className={buttonStyles}>
+            <LinkButton to="edit" >Редактировать</LinkButton>
+        </div>
     </div>
 }
 

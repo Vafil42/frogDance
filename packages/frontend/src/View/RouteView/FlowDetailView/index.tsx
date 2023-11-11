@@ -15,12 +15,12 @@ const RouteDetailView = () => {
 
     useEffect(() => routStore.loadRoute(id!), [routStore])
 
-    if (!routStore.rout) return <LoadingCard />
+    if (!routStore.route) return <LoadingCard />
 
     return <>
-        <TitleCard subtitle="Ваши маршруты" actions={<Actions />}>{routStore.rout.name}</TitleCard>
-        <Card title="Описание">{routStore.rout.description}</Card>
-        <Card title="Точки">{routStore.rout.points.map((point) => <ListElement title={point.name} to="" />)}</Card>
+        <TitleCard subtitle="Ваши маршруты" actions={<Actions />}>{routStore.route.name}</TitleCard>
+        <Card title="Описание">{routStore.route.description}</Card>
+        <Card title="Точки">{routStore.route.points.map((point) => <ListElement title={point.name} to="" />)}</Card>
     </>
 }
 

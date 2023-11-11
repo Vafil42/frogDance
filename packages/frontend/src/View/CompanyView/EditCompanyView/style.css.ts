@@ -6,4 +6,5 @@ export const cardStyles = style({
 
 export const fieldStyles = style({
     paddingTop: 20,
+    paddingBottom: 20,
 })

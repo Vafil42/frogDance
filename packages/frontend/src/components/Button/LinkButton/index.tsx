@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import Button from ".."
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react-lite";
+import { linkStyles } from "./style.css";
 
 interface LinkButtonInterface {
     classname?: string,
@@ -11,7 +12,7 @@ interface LinkButtonInterface {
 }
 
 const LinkButton = (props: LinkButtonInterface) => {
-    return <Button onClick={props.onClick}><Link to={props.to}>{props.children}</Link></Button>
+    return <Button onClick={props.onClick}><Link to={props.to} className={linkStyles}>{props.children}</Link></Button>
 }
 
 export default observer(LinkButton)
