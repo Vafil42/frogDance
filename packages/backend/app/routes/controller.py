@@ -9,6 +9,14 @@ def init_controller(service):
 route_blueprint = Blueprint("route_api", __name__)
 
 
+@route_blueprint.after_request
+def after_request(response):
+    header = response.headers
+    header['Access-Control-Allow-Origin'] = 'true'
+    # Other headers can be added here if needed
+    return response
+
+
 @route_blueprint.route("/routes/get-one/<string:id>", methods=["GET"])
 def getOne(id):
     return routeService.getOne(id)

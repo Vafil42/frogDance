@@ -1,136 +1,183 @@
 from flask import jsonify, make_response
+from packages.backend.app.scripts import jwt_encode, jwt_decode
 from flask_pymongo import ObjectId
 from datetime import datetime
 
 
-class UserService:
-
+class CompanyService:
     def __init__(self, db):
         self.db = db
 
     def getOne(self, id):
         try:
-            user = self.db.routes.findOne({"_id": ObjectId(id)}, {})
+            user = self.db.users.find_one({"_id": ObjectId(id)})
 
             if not user:
                 return make_response(jsonify({
-                    "message": "Route not found",
-                    "error": "Not found",
+                    "message": "User not found",
+                    "error": "Not Found",
                     "status": 404
                 })), 404
+
+            user["_id"] = str(user["_id"])
+
             return make_response(jsonify({
-                "message": "Success",
-                "route": str(user),
+                "message": "User successfully found",
+                "company": str(user),
                 "status": 200
             })), 200
 
         except Exception as e:
             return make_response(jsonify({
-                "message": "ERROR",
+                "message": "Server died!",
                 "error": str(e),
                 "status": 500
             })), 500
 
-    def getMany(self, body):
-        try:
-            users = [self.db.routes.findOne({"_id": ObjectId(i)}, {}) for i in body]
-
-            if not users:
-                return make_response(jsonify({
-                    "message": "Route not found",
-                    "error": "Not found",
-                    "status": 404
-                })), 404
-            return make_response(jsonify({
-                "message": "Success",
-                "route": str(users),
-                "status": 200
-            })), 200
-
-        except Exception as e:
-            return make_response(jsonify({
-                "message": "ERROR",
-                "error": str(e),
-                "status": 500
-            })), 500
+    def getMany(self):
+        pass
 
     def create(self, body):
         try:
-            user_checkout = self.db.users.find_one({"login": body["login"]})
-            if user_checkout:
+            user = self.db.users.find_one({"login": body["login"]})
+
+            if user:
                 return make_response(jsonify({
-                    "message": "This user login is already occupiedd",
+                    "message": "User with same login already exists",
                     "error": "Conflict",
                     "status": 409
                 })), 409
-            time_now = datetime.now()
-            FORMAT = "%d.%m.%y %H:%M"
-            time_work = datetime.strftime(time_now, FORMAT)
-            body["createdAt"] = str(time_work)
-            body["updatedAt"] = str(time_work)
-            user = self.db.users.insert_one(body)
 
+            if len(body["password"]) < 8:
+                return make_response(jsonify({
+                    "message": "Invalid password format",
+                    "error": "Bad Request",
+                    "status": 400
+                })), 400
+
+            time_now = datetime.strftime(datetime.now(), "%d.%m.%Y %H:%M")
+            body["createdAt"] = time_now
+            body["updatedAt"] = time_now
+            token = jwt_encode(body["login"])
+
+            self.db.users.insert_one(body)
+
+            body["_id"] = str(body["_id"])
             return make_response(jsonify({
-                "message": "Success",
-                "route": str(user),
+                "message": "User created successfully",
+                "company": body,
+                "token": token,
                 "status": 201
             })), 201
 
         except Exception as e:
             return make_response(jsonify({
-                "message": "ERROR",
+                "message": "Server died!",
                 "error": str(e),
                 "status": 500
             })), 500
 
-    def update(self, id, body):
+    def logIn(self, body):
         try:
-            time_now = datetime.now()
-            FORMAT = "%d.%m.%y %H:%M"
-            time_work = datetime.strftime(time_now, FORMAT)
-            body["updatedAt"] = str(time_work)
-            user = self.db.routes.update_one({"_id": ObjectId(id)}, {"$set": body})
+            user = self.db.users.find_one({"login": body["login"]})
 
             if not user:
                 return make_response(jsonify({
-                    "message": "Route not found",
-                    "error": "Not found",
+                    "message": "User not found",
+                    "error": "Not Found",
                     "status": 404
                 })), 404
+
+            if body["password"] != user["password"]:
+                return make_response(jsonify({
+                    "message": "Invalid password",
+                    "error": "Unauthorized",
+                    "status": 401
+                })), 401
+
+            token = jwt_encode(body["login"])
+            user["_id"] = str(user["_id"])
             return make_response(jsonify({
                 "message": "Success",
-                "route": str(user),
+                "company": user,
+                "token": token,
                 "status": 200
             })), 200
 
         except Exception as e:
             return make_response(jsonify({
-                "message": "ERROR",
+                "message": "Server died!",
                 "error": str(e),
                 "status": 500
             })), 500
 
-    def delete(self, id):
+    def update(self, headers, body):
         try:
-            user = self.db.routes.find_one({"_id": ObjectId(id)})
+            token = headers["Authorization"]
+            login = jwt_decode(token)
+
+            user = self.db.users.find_one({"login": login})
 
             if not user:
                 return make_response(jsonify({
-                    "message": "Route not found",
-                    "error": "Not found",
+                    "message": "User not found",
+                    "error": "Not Found",
                     "status": 404
                 })), 404
-            self.db.routes.delete_one({"_id": ObjectId(id)})
+
+            if "password" in body.keys() and len(body["password"]) < 8:
+                return make_response(jsonify({
+                    "message": "Invalid password format",
+                    "error": "Bad Request",
+                    "status": 400
+                })), 400
+
+            time_now = datetime.strftime(datetime.now(), "%d.%m.%Y %H:%M")
+            body["updatedAt"] = time_now
+
+            self.db.users.update_one({"login": login}, {"$set": body})
+
+            user["_id"] = str(user["_id"])
+
             return make_response(jsonify({
-                "message": "Success",
+                "message": "User updated successfully",
+                "company": body,
+                "token": token,
+                "status": 200
+            })), 200
+
+        except Exception as e:
+            print(e)
+            return make_response(jsonify({
+                "message": "Server died!",
+                "error": str(e),
+                "status": 500
+            })), 500
+
+    def delete(self, headers):
+        try:
+            token = headers["Authorization"]
+            login = jwt_decode(token)
+
+            user = self.db.users.find_one({"login": login})
+
+            if not user:
+                return make_response(jsonify({
+                    "message": "User not found",
+                    "error": "No Found",
+                    "status": 404
+                })), 404
+
+            self.db.users.delete_one({"login": login})
+
+            return make_response(jsonify({
+                "message": "User deleted successfully",
                 "status": 200
             })), 200
 
         except Exception as e:
             return make_response(jsonify({
-                "message": "ERROR",
+                "message": "Server died!",
                 "error": str(e),
                 "status": 500
             })), 500
-
-

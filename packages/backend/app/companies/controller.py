@@ -8,7 +8,6 @@ def init_controller(service):
 
 company_blueprint = Blueprint("company_api", __name__)
 
-
 @company_blueprint.route("/companies/get-one/<string:id>", methods=["GET"])
 def getOne(id):
     return companyService.getOne(id)
