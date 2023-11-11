@@ -34,8 +34,36 @@ class CompanyService:
                 "status": 500
             })), 500
 
-    def getMany(self):
-        pass
+    def getRoutes(self, headers):
+        try:
+            token = headers["Authorization"]
+            login = jwt_decode(token)
+
+            company = self.db.companies.find_one({"login": login})
+
+            if not company:
+                return make_response(jsonify({
+                    "message": "Company not found",
+                    "error": "Not Found",
+                    "status": 404
+                })), 404
+
+            routes = list(self.db.routes.find({"authorId": str(company["_id"])}))
+            for i in range(len(routes)):
+                routes[i]["_id"] = str(routes[i]["_id"])
+
+            return make_response(jsonify({
+                "message": "Company successfully found",
+                "routes": routes,
+                "status": 200
+            })), 200
+
+        except Exception as e:
+            return make_response(jsonify({
+                "message": "Server died!",
+                "error": str(e),
+                "status": 500
+            })), 500
 
     def create(self, body):
         try:

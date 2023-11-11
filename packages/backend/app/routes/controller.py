@@ -14,9 +14,10 @@ def getOne(id):
     return routeService.getOne(id)
 
 
-@route_blueprint.route("/routes/get-many", methods=["POST"])
-def getMany():
-    return routeService.getMany(request.json)
+@route_blueprint.route("/routes/get-favorites", methods=["POST"])
+def getFavorites():
+    body = request.json
+    return routeService.getFavorites(body)
 
 
 @route_blueprint.route("/routes/create", methods=["POST"])
