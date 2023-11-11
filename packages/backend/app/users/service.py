@@ -50,7 +50,7 @@ class CompanyService:
                     "status": 404
                 })), 404
 
-            users = list(self.db.users.find({"authorId": str(company["_id"])}))
+            users = list(self.db.users.find({"authorId": str(user["_id"])}))
             for i in range(len(users)):
                 users[i]["_id"] = str(users[i]["_id"])
 
