@@ -9,9 +9,10 @@ def init_controller(service):
 company_blueprint = Blueprint("company_api", __name__)
 
 
-@company_blueprint.route("/companies/get-one/<string:id>", methods=["GET"])
+@company_blueprint.route("/companies/get-one", methods=["GET"])
 def getOne(id):
-    return companyService.getOne(id)
+    headers = request.headers
+    return companyService.getOne(headers)
 
 
 @company_blueprint.route("/companies/get-routes", methods=["GET"])
