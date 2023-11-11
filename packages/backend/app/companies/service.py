@@ -8,9 +8,12 @@ class CompanyService:
     def __init__(self, db):
         self.db = db
 
-    def getOne(self, id):
+    def getOne(self, headers):
         try:
-            company = self.db.companies.find_one({"_id": ObjectId(id)})
+            token = headers["Authorization"]
+            login = jwt_decode(token)
+
+            company = self.db.companies.find_one({"login": login})
 
             if not company:
                 return make_response(jsonify({
