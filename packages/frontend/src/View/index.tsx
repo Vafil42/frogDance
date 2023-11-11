@@ -11,7 +11,7 @@ const AppView = () => {
             placeholder: "Компания"
         },
         {
-            path: "flow",
+            path: "routs",
             placeholder: "Маршруты"
         }
     ]
