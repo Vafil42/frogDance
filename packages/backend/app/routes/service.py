@@ -195,13 +195,10 @@ class RouteService:
                         "error": "Not Found",
                         "status": 404
                     })), 404
-
                 company["_id"] = str(company["_id"])
-                route["_id"] = str(route["_id"])
                 route["company"] = company
                 del route["authorId"]
                 route_list.append(route)
-
             return make_response(jsonify({
                 "message": "Routes successfully found",
                 "routes": route_list,
