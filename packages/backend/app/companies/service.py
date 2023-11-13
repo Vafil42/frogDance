@@ -1,18 +1,16 @@
 from flask import jsonify, make_response
 from packages.backend.app.scripts import jwt_encode, jwt_decode
 from datetime import datetime
+from flask_pymongo import ObjectId
 
 
 class CompanyService:
     def __init__(self, db):
         self.db = db
 
-    def getOne(self, headers):
+    def getOne(self, headers, id):
         try:
-            token = headers["Authorization"]
-            login = jwt_decode(token)
-
-            company = self.db.companies.find_one({"login": login})
+            company = self.db.companies.find_one({"_id": ObjectId(id)})
 
             if not company:
                 return make_response(jsonify({
@@ -25,7 +23,7 @@ class CompanyService:
 
             return make_response(jsonify({
                 "message": "Company successfully found",
-                "company": str(company),
+                "company": company,
                 "status": 200
             })), 200
 
