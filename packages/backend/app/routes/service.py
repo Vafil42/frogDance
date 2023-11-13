@@ -19,7 +19,9 @@ class RouteService:
                     "error": "Not found",
                     "status": 404
                 })), 404
+
             route["_id"] = str(route["_id"])
+
             return make_response(jsonify({
                 "message": "Success",
                 "route": str(route),

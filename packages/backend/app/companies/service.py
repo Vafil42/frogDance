@@ -10,26 +10,26 @@ class CompanyService:
 
     def getOne(self, id):
         try:
-            company = self.db.companies.find_one({"_id": ObjectId(id)})
+            company = self.db.companies.find_one({"_id": ObjectId(id)}, {})
 
             if not company:
                 return make_response(jsonify({
-                    "message": "Company not found",
-                    "error": "Not Found",
+                    "message": "company not found",
+                    "error": "Not found",
                     "status": 404
                 })), 404
 
             company["_id"] = str(company["_id"])
 
             return make_response(jsonify({
-                "message": "Company successfully found",
-                "company": str(company),
+                "message": "Success",
+                "route": str(company),
                 "status": 200
             })), 200
 
         except Exception as e:
             return make_response(jsonify({
-                "message": "Server died!",
+                "message": "ERROR",
                 "error": str(e),
                 "status": 500
             })), 500
