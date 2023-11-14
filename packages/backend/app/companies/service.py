@@ -8,24 +8,34 @@ class CompanyService:
     def __init__(self, db):
         self.db = db
 
-    def getOne(self, id):
+    def getOne(self, headers):
         try:
-            company = self.db.companies.find_one({"_id": ObjectId(id)}, {})
+            token = headers["Authorization"]
+            login = jwt_decode(token)
+
+            company = self.db.companies.find_one({"login": login})
 
             if not company:
                 return make_response(jsonify({
-                    "message": "company not found",
-                    "error": "Not found",
+                    "message": "Company not found",
+                    "error": "Not Found",
                     "status": 404
                 })), 404
 
             company["_id"] = str(company["_id"])
 
             return make_response(jsonify({
-                "message": "Success",
-                "route": str(company),
+                "message": "Company successfully found",
+                "company": str(company),
                 "status": 200
             })), 200
+
+        except Exception as e:
+            return make_response(jsonify({
+                "message": "Server died!",
+                "error": str(e),
+                "status": 500
+            })), 500
 
         except Exception as e:
             return make_response(jsonify({
@@ -163,7 +173,7 @@ class CompanyService:
             time_now = datetime.strftime(datetime.now(), "%d.%m.%Y %H:%M")
             body["updatedAt"] = time_now
 
-            self.db.companies.update_one({"login": login}, {"$set": body})
+            self.db.company.update_one({"login": login}, {"$set": body})
 
             company["_id"] = str(company["_id"])
 

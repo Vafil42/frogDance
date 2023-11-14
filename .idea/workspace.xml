@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28cc47c6-a474-4729-9466-94ff56938a0e" name="Changes" comment="fff">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/backend/app/companies/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/app/companies/controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/backend/app/companies/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/app/companies/service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/backend/app/routes/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/packages/backend/app/routes/service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/frontend/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
