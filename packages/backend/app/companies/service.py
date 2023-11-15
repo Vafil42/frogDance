@@ -1,6 +1,5 @@
 from flask import jsonify, make_response
 from packages.backend.app.scripts import jwt_encode, jwt_decode
-from flask_pymongo import ObjectId
 from datetime import datetime
 
 
@@ -26,20 +25,13 @@ class CompanyService:
 
             return make_response(jsonify({
                 "message": "Company successfully found",
-                "company": str(company),
+                "company": company,
                 "status": 200
             })), 200
 
         except Exception as e:
             return make_response(jsonify({
                 "message": "Server died!",
-                "error": str(e),
-                "status": 500
-            })), 500
-
-        except Exception as e:
-            return make_response(jsonify({
-                "message": "ERROR",
                 "error": str(e),
                 "status": 500
             })), 500
